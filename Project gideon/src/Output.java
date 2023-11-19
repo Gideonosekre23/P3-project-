@@ -8,7 +8,9 @@ public class Output {
     public static void displayNotFound() {
         System.out.println("Article not found.");
     }
-
+    public static void print(String words) {
+        System.out.println(words);
+    }
     public static void printResults(SearchedResults results) {
         if (results != null) {
             System.out.println("Search Results:");

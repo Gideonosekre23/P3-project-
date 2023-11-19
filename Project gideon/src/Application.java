@@ -12,7 +12,7 @@ public class Application {
     private static final String PASSWORD = "";
     public Integer extractArticleNumber(String input) {
         // Define a regular expression to match article numbers like "Article 1" or "article one"
-        String regex = "(?i)article\\s*(\\d+)";
+        String regex = "(?i)(what is )?article\\s*(\\d+)";
         // The regular expression uses "(?i)" for case-insensitive matching.
 
         Pattern pattern = Pattern.compile(regex);
@@ -20,21 +20,23 @@ public class Application {
 
         if (matcher.find()) {
             // Extract the matched number
-            String numberStr = matcher.group(1);
+            String numberStr = matcher.group(2);
+
             try {
                 // Parse the number as an integer
                 return Integer.parseInt(numberStr);
             } catch (NumberFormatException e) {
                 // Handle any parsing errors here, such as if the number is not valid
-                // You might want to display an error message or return a default value
+                System.out.println("Error parsing number: " + numberStr);
             }
         }
 
-        // Return a default value (e.g., -1) to indicate no valid article number found
+
         return -1;
     }
 
-        public static SearchedResults searchArticle(int articleNumber) {
+
+    public static SearchedResults searchArticle(int articleNumber) {
             try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
                 String sql = "SELECT * FROM article WHERE number = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
